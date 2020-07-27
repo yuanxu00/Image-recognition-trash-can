@@ -1,6 +1,6 @@
 # Image-recognition-trash-can
 In this project, it is mainly to design a device that uses MobileNetV2 to classify the garbage for image recognition, and then put the classified garbage into the designated garbage bin.
-由于英语不好，所以就说中文了
+由于英语不好，所以就说中文了\n
 这个项目说起来也还是个缝合怪
 做的时候是参考了这位的https://github.com/jzx-gooner/DL-wastesort
 但是后面做的时候由于个人水平问题
