@@ -1,19 +1,3 @@
-/**
-  ******************************************************************************
-  * @file    MSD_test.c
-  * @author  fire
-  * @version V1.0
-  * @date    2013-xx-xx
-  * @brief   MSD²âÊÔ´úÂë
-  ******************************************************************************
-  * @attention
-  *
-  * ÊµÑéÆ½Ì¨:Ò°»ğSTM32 F429-ÌôÕ½Õß ¿ª·¢°å  
-  * ÂÛÌ³    :http://www.firebbs.cn
-  * ÌÔ±¦    :http://fire-stm32.taobao.com
-  *
-  ******************************************************************************
-  */ 
 #include "MSD_test.h"  
 #include <math.h>
 #include <stdlib.h>
@@ -25,22 +9,22 @@ void ShowHelp(void);
 void ShowData(int position, int acceleration, int deceleration, int speed, int steps);
 void Delay(__IO u32 nCount);
 
-/*! \brief ´òÓ¡°ïÖúÃüÁî
+/*! \brief æ‰“å°å¸®åŠ©å‘½ä»¤
  */
 //void ShowHelp(void)
 //{
-//    printf("\n\r¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ªÒ°»ğ²½½øµç»úÇı¶¯ÑİÊ¾³ÌĞò¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª");
-//    printf("\n\rÊäÈëÃüÁî£º");
-//    printf("\n\r< ? >       -°ïÖú²Ëµ¥");
-//    printf("\n\ra[data]     -ÉèÖÃ²½½øµç»úµÄ¼ÓËÙ¶È£¨·¶Î§£º71¡ª32000£©µ¥Î»Îª£º0.01rad/s^2");
-//    printf("\n\rd[data]     -ÉèÖÃ²½½øµç»úµÄ¼õËÙ¶È£¨·¶Î§£º71¡ª32000£©µ¥Î»Îª£º0.01rad/s^2");
-//    printf("\n\rs[data]     -ÉèÖÃ²½½øµç»úµÄ×î´óËÙ¶È£¨·¶Î§£º12¡ª3000£©µ¥Î»Îª£º0.01rad/s");
-//    printf("\n\rm[data]     -ÒÔÉè¶¨µÄ²½ÊıÒÆ¶¯²½½øµç»ú£¨·¶Î§£º-2147483647¡ª2147483647£¬ÆäÖĞÕıÊıÎªË³Ê±Õë£¬¸ºÊıÎªÄæÊ±Õë£©");
+//    printf("\n\râ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”é‡ç«æ­¥è¿›ç”µæœºé©±åŠ¨æ¼”ç¤ºç¨‹åºâ€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”");
+//    printf("\n\rè¾“å…¥å‘½ä»¤ï¼š");
+//    printf("\n\r< ? >       -å¸®åŠ©èœå•");
+//    printf("\n\ra[data]     -è®¾ç½®æ­¥è¿›ç”µæœºçš„åŠ é€Ÿåº¦ï¼ˆèŒƒå›´ï¼š71â€”32000ï¼‰å•ä½ä¸ºï¼š0.01rad/s^2");
+//    printf("\n\rd[data]     -è®¾ç½®æ­¥è¿›ç”µæœºçš„å‡é€Ÿåº¦ï¼ˆèŒƒå›´ï¼š71â€”32000ï¼‰å•ä½ä¸ºï¼š0.01rad/s^2");
+//    printf("\n\rs[data]     -è®¾ç½®æ­¥è¿›ç”µæœºçš„æœ€å¤§é€Ÿåº¦ï¼ˆèŒƒå›´ï¼š12â€”3000ï¼‰å•ä½ä¸ºï¼š0.01rad/s");
+//    printf("\n\rm[data]     -ä»¥è®¾å®šçš„æ­¥æ•°ç§»åŠ¨æ­¥è¿›ç”µæœºï¼ˆèŒƒå›´ï¼š-2147483647â€”2147483647ï¼Œå…¶ä¸­æ­£æ•°ä¸ºé¡ºæ—¶é’ˆï¼Œè´Ÿæ•°ä¸ºé€†æ—¶é’ˆï¼‰");
 //  
 //    printf("\n\rmove [steps] [accel] [decel] [speed]");
-//    printf("\n\r            -ÒÔÉè¶¨µÄ²½Êı¡¢¼ÓËÙ¶È£¬¼õËÙ¶È£¬×î´óËÙ¶È¿ªÊ¼ÔË¶¯");
-//    printf("\n\r<Enter¼ü>   -ÖØ¸´×îºóÒ»´Î¶¯×÷");
-//    printf("\n\r¿ª·¢°å°´¼ü£¬KEY1£ºÇı¶¯Æ÷½ûÖ¹Êä³ö(ÍÑ»ú×´Ì¬)  KEY2£ºÇı¶¯Æ÷»Ö¸´Õı³£¹¤×÷\n\r ");
+//    printf("\n\r            -ä»¥è®¾å®šçš„æ­¥æ•°ã€åŠ é€Ÿåº¦ï¼Œå‡é€Ÿåº¦ï¼Œæœ€å¤§é€Ÿåº¦å¼€å§‹è¿åŠ¨");
+//    printf("\n\r<Enteré”®>   -é‡å¤æœ€åä¸€æ¬¡åŠ¨ä½œ");
+//    printf("\n\rå¼€å‘æ¿æŒ‰é”®ï¼ŒKEY1ï¼šé©±åŠ¨å™¨ç¦æ­¢è¾“å‡º(è„±æœºçŠ¶æ€)  KEY2ï¼šé©±åŠ¨å™¨æ¢å¤æ­£å¸¸å·¥ä½œ\n\r ");
 //    
 //}
 
@@ -75,61 +59,61 @@ void ShowHelp(void)
 
 
 
-///*! \brief ´òÓ¡µç»ú²ÎÊı
-// *  \param acceleration ¼ÓËÙ¶È
-// *  \param deceleration ¼õËÙ¶È
-// *  \param speed        ×î´óËÙ¶È
-// *  \param steps        ÒÆ¶¯²½Êı
+///*! \brief æ‰“å°ç”µæœºå‚æ•°
+// *  \param acceleration åŠ é€Ÿåº¦
+// *  \param deceleration å‡é€Ÿåº¦
+// *  \param speed        æœ€å¤§é€Ÿåº¦
+// *  \param steps        ç§»åŠ¨æ­¥æ•°
 // */
 //void ShowData(int position, int acceleration, int deceleration, int speed, int steps)
 //{
-//  printf("\n\r¼ÓËÙ¶È:%.2frad/s^2",1.0*acceleration/100);
-//  printf("  ¼õËÙ¶È:%.2frad/s^2",1.0*deceleration/100);
-//  printf("  ×î´óËÙ¶È:%.2frad/s(%.2frpm)",1.0*speed/100,9.55*speed/100);
-//  printf("  ÒÆ¶¯²½Êı:%d",steps);
-//  printf("\n\rµç»úµ±Ç°Î»ÖÃ: %d\r\n",position);
+//  printf("\n\råŠ é€Ÿåº¦:%.2frad/s^2",1.0*acceleration/100);
+//  printf("  å‡é€Ÿåº¦:%.2frad/s^2",1.0*deceleration/100);
+//  printf("  æœ€å¤§é€Ÿåº¦:%.2frad/s(%.2frpm)",1.0*speed/100,9.55*speed/100);
+//  printf("  ç§»åŠ¨æ­¥æ•°:%d",steps);
+//  printf("\n\rç”µæœºå½“å‰ä½ç½®: %d\r\n",position);
 //}
 /**
 
-  * @brief  ´¦Àí´®¿Ú½ÓÊÕµ½µÄÊı¾İ
+  * @brief  å¤„ç†ä¸²å£æ¥æ”¶åˆ°çš„æ•°æ®
 
-  * @param  ÎŞ
+  * @param  æ— 
 
-  * @retval ÎŞ
+  * @retval æ— 
 
   */
 void DealSerialData(void)
 {
     static char showflag =1;
-    //Ä¬ÈÏÒÆ¶¯²½Êı
+    //é»˜è®¤ç§»åŠ¨æ­¥æ•°
     static int steps = 40000;
-    //Ä¬ÈÏ¼ÓËÙ¶È
+    //é»˜è®¤åŠ é€Ÿåº¦
     static int acceleration = 32000;
-    //Ä¬ÈÏ¼õËÙ¶È
+    //é»˜è®¤å‡é€Ÿåº¦
     static int deceleration = 32000;
-    //Ä¬ÈÏ×î´óËÙ¶È
+    //é»˜è®¤æœ€å¤§é€Ÿåº¦
     static int speed = 3000;
     
     int acc_temp=0;
     int dec_temp=0;
     int speed_temp=0;
     
-    //½ÓÊÕµ½ÕıÈ·µÄÖ¸Áî²ÅÎªTRUE
+    //æ¥æ”¶åˆ°æ­£ç¡®çš„æŒ‡ä»¤æ‰ä¸ºTRUE
     char okCmd = FALSE;
     if(showflag)
     {
       showflag = 0;
       ShowData(stepPosition, acceleration, deceleration, speed, steps);
     }
-    //¼ì²éÊÇ·ñ½ÓÊÕµ½Ö¸Áî
+    //æ£€æŸ¥æ˜¯å¦æ¥æ”¶åˆ°æŒ‡ä»¤
     if(status.cmd == TRUE)
     {        
       if(UART_RxBuffer[0] == 'm')
       {
-        //ÒÔ¹Ì¶¨²½ÊıÒÆ¶¯
+        //ä»¥å›ºå®šæ­¥æ•°ç§»åŠ¨
         if(UART_RxBuffer[1] == ' ')
         {
-          //´Ó´®¿Ú»ñÈ¡²½Êı
+          //ä»ä¸²å£è·å–æ­¥æ•°
           steps = atoi((char const *)UART_RxBuffer+2);
           MSD_Move(steps, acceleration, deceleration, speed);
           okCmd = TRUE;
@@ -143,7 +127,7 @@ void DealSerialData(void)
           {
             if(UART_RxBuffer[3] == 'e')
             {
-              //ÉèÖÃ²½Êı¡¢¼ÓËÙ¶È¡¢¼õËÙ¶È¡¢×î´óËÙ¶È
+              //è®¾ç½®æ­¥æ•°ã€åŠ é€Ÿåº¦ã€å‡é€Ÿåº¦ã€æœ€å¤§é€Ÿåº¦
               if(UART_RxBuffer[4] == ' ')
               {
                 int i = 6;
@@ -168,14 +152,14 @@ void DealSerialData(void)
       }
       else if(UART_RxBuffer[0] == 'a')
       {
-        //ÉèÖÃ¼ÓËÙ¶È
+        //è®¾ç½®åŠ é€Ÿåº¦
         if(UART_RxBuffer[1] == ' ')
         {
           acc_temp = atoi((char const *)UART_RxBuffer+2);
           if(acc_temp>=71 && acc_temp<=32000)
           {
             acceleration = acc_temp;
-            //printf("\n\r¼ÓËÙ¶È:%.2frad/s^2",1.0*acceleration/100);
+            //printf("\n\råŠ é€Ÿåº¦:%.2frad/s^2",1.0*acceleration/100);
 						Usart_SendString(DEBUG_USART, "\n\r  ");
             okCmd = TRUE;
           }
@@ -183,28 +167,28 @@ void DealSerialData(void)
       }
       else if(UART_RxBuffer[0] == 'd')
       {
-        //ÉèÖÃ¼õËÙ¶È
+        //è®¾ç½®å‡é€Ÿåº¦
         if(UART_RxBuffer[1] == ' ')
         {
           dec_temp = atoi((char const *)UART_RxBuffer+2);
           if(dec_temp>=71 && dec_temp<=32000)
           {
             deceleration = dec_temp;
-            //printf("\n\r¼õËÙ¶È:%.2frad/s^2",1.0*deceleration/100);
+            //printf("\n\rå‡é€Ÿåº¦:%.2frad/s^2",1.0*deceleration/100);
             okCmd = TRUE;
           }
         }
       }
       else if(UART_RxBuffer[0] == 's')
       {
-        //ÉèÖÃ×î´óËÙ¶È
+        //è®¾ç½®æœ€å¤§é€Ÿåº¦
         if(UART_RxBuffer[1] == ' ')
         {
           speed_temp = atoi((char const *)UART_RxBuffer+2);
           if(speed_temp>=12 && speed_temp<=20000)
           {
             speed = speed_temp;
-            //printf("\n\r×î´óËÙ¶È:%.2frad/s",1.0*speed/100);
+            //printf("\n\ræœ€å¤§é€Ÿåº¦:%.2frad/s",1.0*speed/100);
 						Usart_SendString(DEBUG_USART, "\n\r  ");
             okCmd = TRUE;
           }
@@ -212,31 +196,31 @@ void DealSerialData(void)
       }
       else if(UART_RxBuffer[0] == 13)
       {
-        //Èç¹ûÊÇ»Ø³µ¼üÖ±½ÓÖØ¸´ÉÏÒ»´ÎÔË¶¯
+        //å¦‚æœæ˜¯å›è½¦é”®ç›´æ¥é‡å¤ä¸Šä¸€æ¬¡è¿åŠ¨
         MSD_Move(steps, acceleration, deceleration, speed);
         okCmd = TRUE;
       }
       else if(UART_RxBuffer[0] == '?')
       {
-        //´òÓ¡°ïÖúÃüÁî
+        //æ‰“å°å¸®åŠ©å‘½ä»¤
         ShowHelp();
         okCmd = TRUE;
       }
       else if(UART_RxBuffer[0] == 't')
       {
-        //²½½øµç»ú²âÊÔÖ¸Áî
+        //æ­¥è¿›ç”µæœºæµ‹è¯•æŒ‡ä»¤
         MSD_demo_run();         
         okCmd = TRUE;
       }
-      //Èç¹ûÖ¸ÁîÓĞÎŞÔò´òÓ¡°ïÖúÃüÁî
+      //å¦‚æœæŒ‡ä»¤æœ‰æ— åˆ™æ‰“å°å¸®åŠ©å‘½ä»¤
       if(okCmd != TRUE)
       {
-        //printf("\n\r ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë...");
+        //printf("\n\r è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥...");
         Usart_SendString(DEBUG_USART, "Error! Pleace enter again");
 				ShowHelp();
       }
 
-      //Çå¿Õ´®¿Ú½ÓÊÕ»º³åÊı×é
+      //æ¸…ç©ºä¸²å£æ¥æ”¶ç¼“å†²æ•°ç»„
       status.cmd = FALSE;
       uart_FlushRxBuffer();
 
@@ -244,7 +228,7 @@ void DealSerialData(void)
       {
         if(status.out_ena == TRUE)
 				{
-            //printf("\n\rµç»úÕıÔÚÔËĞĞ...");
+            //printf("\n\rç”µæœºæ­£åœ¨è¿è¡Œ...");
 					  Usart_SendString(DEBUG_USART, "Stepper Running");
 				}   
         while(status.running == TRUE)
@@ -266,11 +250,11 @@ void DealSerialData(void)
 }
 /**
 
-  * @brief  Çı¶¯Æ÷ÔËĞĞÑİÊ¾
+  * @brief  é©±åŠ¨å™¨è¿è¡Œæ¼”ç¤º
 
-  * @param  ÎŞ
+  * @param  æ— 
 
-  * @retval ÎŞ
+  * @retval æ— 
 
   */
 void MSD_demo_run(void)
@@ -300,7 +284,7 @@ void MSD_demo_run(void)
     step_cnt=0;
 }
 
-void Delay(__IO uint32_t nCount)	 //¼òµ¥µÄÑÓÊ±º¯Êı
+void Delay(__IO uint32_t nCount)	 //ç®€å•çš„å»¶æ—¶å‡½æ•°
 
 {
 
