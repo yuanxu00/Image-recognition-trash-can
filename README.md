@@ -9,3 +9,5 @@ In this project, it is mainly to design a device that uses MobileNetV2 to classi
 用的器件有：Jetson Nano（用来识别图像的) F429开发板(控制电机，其实不用这么贵，主要是手头目前就它）
 
 文件名带Test的，都是用来测试单个模块的，重点文件就是，训练模型用的fine_tuning.py，将得到的TF模型转换为TRT模型 tf_to_trt.py ，运行模型trt_cemare_stepper.py     
+
+视频https://www.bilibili.com/video/BV15K411n7bY
